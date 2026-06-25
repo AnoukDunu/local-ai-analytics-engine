@@ -1,0 +1,28 @@
+This file is purely just to write the database schema so it can be used in the PostgreSQL database
+
+========= STAGING TABLE (raw data) =========
+CREATE TABLE stg_products (
+    id INT,
+    title VARCHAR(255),
+    price DECIMAL(10, 2),
+    description TEXT,
+    category VARCHAR(255),
+    image VARCHAR(255),
+    rating JSONB,
+    loaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+========= FINAL TABLE (cleaned data) =========
+CREATE TABLE cln_products (
+    id INT PRIMARY KEY,
+    title VARCHAR(255),
+    price DECIMAL(10, 2),
+    description TEXT,
+    category VARCHAR(255),
+    image VARCHAR(255),
+    rating_rate FLOAT,
+    rating_count INTEGER,
+    estimated_revenue FLOAT,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
