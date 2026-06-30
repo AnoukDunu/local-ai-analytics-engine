@@ -5,3 +5,11 @@
 # used the following command to install it. Kinda important and took me way too long to figure out:
 # python -m pip install ollama
 import ollama
+
+def ask_llm(prompt):
+    response = ollama.chat(
+        model="",
+        messages=[{"role": "user", "content":prompt}]
+    )
+
+    return response["message"]["content"]
