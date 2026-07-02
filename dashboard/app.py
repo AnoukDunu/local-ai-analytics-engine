@@ -19,6 +19,8 @@ from src.main import run_pipeline  # Import the run_pipeline function from main.
 st.title("Products Analytics Dashboard")
 
 if st.button("Run Data Pipeline"):
+    # Run the data pipeline when the button is clicked
+    run_pipeline()
     # Establish database connection to fetch data for the dashboard
     conn = get_connection()
 
