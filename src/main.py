@@ -62,7 +62,7 @@ def run_pipeline():
 
 
 if __name__ == "__main__":
-    success = run_pipeline()
+    run_pipeline()
     # if the pipeline runs successfully, start the AI interface
     # if success:
     #     start_ai_interface()
