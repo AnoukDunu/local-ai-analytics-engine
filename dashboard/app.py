@@ -19,20 +19,22 @@ from src.main import run_pipeline
 st.set_page_config(page_title="Products Analytics Dashboard", layout="wide")
 st.title("Products Analytics Dashboard")
 
-# 1. INITIALISE SESSION STATE FOR DASHBOARD
+# ==================================================
+# Initialise session state for pipeline results
 if "products_df" not in st.session_state:
     st.session_state["products_df"] = None
 
-# 2. INITIALISE SESSION STATE FOR AI QUERY
+# Initialise the session state for AI query results
 if "ai_results" not in st.session_state:
     st.session_state["ai_results"] = None
+# ==================================================
 
-# 3. TRIGGER THE PIPELINE
+# Triggering the Pipeline Run Button
 if st.button("Run Data Pipeline", on_click=run_pipeline):
     conn = get_connection()
     st.session_state["products_df"] = pd.read_sql("SELECT * FROM cln_products", conn)
 
-# 4. DISPLAY THE DASHBOARD
+# Displaying the Products Data and Visualizations on the dashboard
 if st.session_state["products_df"] is not None:
     df = st.session_state["products_df"]
     
@@ -47,13 +49,15 @@ if st.session_state["products_df"] is not None:
     st.subheader("Estimated Revenue by Category")
     st.bar_chart(category)
 
-# 5. AI INTERFACE
+# AI interface
 st.title("AI Interface for Data Queries")
 
-user_question = st.text_input("Type your question, fool:")
+with st.form("query_form"):
+    user_question = st.text_input("Type your question, fool:")
+    submitted = st.form_submit_button("Run Query!")
 
-# 6. TRIGGER THE AI QUERY BUTTON
-if st.button("Run Query!"):
+# Triggering the AI querry button
+if submitted:
     if user_question:
         with st.spinner("Processing your question..."):
             try:
@@ -70,8 +74,7 @@ if st.button("Run Query!"):
         st.warning("Please enter a question first, dumbo!")
         st.session_state["ai_results"] = None
 
-# 7. DISPLAY THE AI QUERY RESULTS
-# This ensures the answers stay on screen even if you click "Run Data Pipeline" again!
+# Displaying the AI query results on the dashboard
 if st.session_state["ai_results"] is not None:
     results = st.session_state["ai_results"]
     
