@@ -44,7 +44,6 @@ if st.button("Run Data Pipeline"):
     # This is the newly added AI interface for asking questions about the data. 
     # It uses the ask_database function from the ai.pipeline module to generate SQL queries, execute them, and explain the results in natural language.
     st.title("AI Interface for Data Queries")
-    # question = st.text_input("Ask a question about your data")
 
     # input field for the user to type questions.
     user_question = st.text_input("Type your question, fool:")
@@ -65,5 +64,5 @@ if st.button("Run Data Pipeline"):
             except Exception as e:
                 st.error(f"Error: {e}")
 
-    else:
-        st.warning("Please enter a question first, dumbo!")
+        else:
+            st.warning("Please enter a question first, dumbo!")
