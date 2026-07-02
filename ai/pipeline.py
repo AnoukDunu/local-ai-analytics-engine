@@ -1,8 +1,8 @@
 # This file is the brain and it glues everything together. 
 # It takes a question, generates a SQL query, executes it, and then explains the results in natural language.
-from sql_generator import generate_sql
-from response_generator import explain_results
-from query_engine import run_query
+from .sql_generator import generate_sql
+from .response_generator import explain_results
+from .query_engine import run_query
 
 def ask_database(question):
     # Generate SQL query from the question

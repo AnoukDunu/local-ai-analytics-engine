@@ -1,6 +1,6 @@
 # This file is what wil run SQL
-from db import get_connection
-
+from .db import get_connection
+# The above pathing was changed to resolve an issue affecting the streamlit dashboard!
 def run_query(sql):
     # start the database connection
     conn = get_connection()

@@ -1,6 +1,6 @@
 # This file is to make the results more human-readable (in natural language basically)
-from llm import ask_llm
-
+from .llm import ask_llm
+# The above pathing was changed to resolve an issue affecting the streamlit dashboard!
 def explain_results(question, data):
     prompt = f"""
     You are a data analyst. You will be given a question and the results of a SQL query. 

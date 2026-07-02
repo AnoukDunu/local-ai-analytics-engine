@@ -1,5 +1,6 @@
-from llm import ask_llm
-from schema import get_schema
+# The below pathing was changed to resolve an issue affecting the streamlit dashboard!
+from .llm import ask_llm
+from .schema import get_schema
 
 # This code will prompt the LLM to generate a SQL query based on the provided question and database schema. 
 # It uses the `ask_llm` function to send the prompt to the local LLM and retrieve the generated SQL query. 
