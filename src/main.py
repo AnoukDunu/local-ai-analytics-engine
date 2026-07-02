@@ -37,32 +37,8 @@ def run_pipeline():
     else:
         logger.error("Data extraction failed.")
         return False
-    
 
-# function that starts the AI interface for asking questions about the data
-# def start_ai_interface():
-#     logger.info("Starting AI interface...")
-
-#     print("SkyNet is online and ready\n")
-
-#     while True:
-#         question = input("Ask a question about the data (or type 'exit' to quit): ")
-        
-#         if question.lower() == 'exit':
-#             break
-        
-#         try:
-#             sql, data, answer = ask_database(question)
-#             print(f"Generated SQL: {sql}")
-#             print(f"Query Results: {data}")
-#             print(f"Answer: {answer}")
-#         except Exception as e:
-#             logger.error(f"Error: {e}")
-#             print("Sorry, there was an error processing your question. Please try again.")
 
 
 if __name__ == "__main__":
     run_pipeline()
-    # if the pipeline runs successfully, start the AI interface
-    # if success:
-    #     start_ai_interface()
