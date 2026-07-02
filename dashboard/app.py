@@ -18,9 +18,7 @@ from ai.pipeline import ask_database
 from src.main import run_pipeline  # Import the run_pipeline function from main.py
 st.title("Products Analytics Dashboard")
 
-if st.button("Run Data Pipeline"):
-    # Run the data pipeline when the button is clicked
-    run_pipeline()
+if st.button("Run Data Pipeline", on_click=run_pipeline):
     # Establish database connection to fetch data for the dashboard
     conn = get_connection()
 
@@ -43,26 +41,29 @@ if st.button("Run Data Pipeline"):
 
     # This is the newly added AI interface for asking questions about the data. 
     # It uses the ask_database function from the ai.pipeline module to generate SQL queries, execute them, and explain the results in natural language.
-    st.title("AI Interface for Data Queries")
+st.title("AI Interface for Data Queries")
 
-    # input field for the user to type questions.
-    user_question = st.text_input("Type your question, fool:")
+# input field for the user to type questions.
+user_question = st.text_input("Type your question, fool:")
 
-    # Creating a button to trigger the AI query
-    if st.button("Run Query!"):
-        if user_question:
-            try:
-                sql, data, answer = ask_database(user_question)
+# Creating a button to trigger the AI query
+if st.button("Run Query!"):
+    if user_question:
+        st.spinner("Processing your question...")
+        try:
+            sql, data, answer = ask_database(user_question)
+            
+            with st.expander("See full details"):
                 st.subheader("Generated SQL Query")
                 st.code(sql, language="sql")
-
+            
                 st.subheader("Raw Data")
                 st.write(data)
 
-                st.subheader("AI Answer:")
-                st.success(answer)
-            except Exception as e:
-                st.error(f"Error: {e}")
+            st.subheader("AI Answer:")
+            st.success(answer)
+        except Exception as e:
+            st.error(f"Error: {e}")
 
-        else:
-            st.warning("Please enter a question first, dumbo!")
+    else:
+        st.warning("Please enter a question first, dumbo!")
