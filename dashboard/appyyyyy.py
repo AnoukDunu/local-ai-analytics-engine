@@ -12,6 +12,7 @@ for path in (PROJECT_ROOT, SRC_ROOT):
 
 import pandas as pd
 import streamlit as st
+
 from ai.pipeline import ask_database
 from database.connection import get_connection
 from src.main import run_pipeline
@@ -19,23 +20,20 @@ from src.main import run_pipeline
 st.set_page_config(page_title="Products Analytics Dashboard", layout="wide")
 st.title("Products Analytics Dashboard")
 
-# 1. INITIALISE SESSION STATE FOR DASHBOARD
-if "products_df" not in st.session_state:
-    st.session_state["products_df"] = None
+if "pipeline_run" not in st.session_state:
+    st.session_state.pipeline_run = False
+if "query_result" not in st.session_state:
+    st.session_state.query_result = None
+if "query_error" not in st.session_state:
+    st.session_state.query_error = None
 
-# 2. INITIALISE SESSION STATE FOR AI QUERY
-if "ai_results" not in st.session_state:
-    st.session_state["ai_results"] = None
+if st.button("Run Data Pipeline"):
+    st.session_state.pipeline_run = True
 
-# 3. TRIGGER THE PIPELINE
-if st.button("Run Data Pipeline", on_click=run_pipeline):
+if st.session_state.pipeline_run:
     conn = get_connection()
-    st.session_state["products_df"] = pd.read_sql("SELECT * FROM cln_products", conn)
+    df = pd.read_sql("SELECT * FROM cln_products", conn)
 
-# 4. DISPLAY THE DASHBOARD
-if st.session_state["products_df"] is not None:
-    df = st.session_state["products_df"]
-    
     st.subheader("Products Data")
     st.write(df)
 
@@ -47,40 +45,40 @@ if st.session_state["products_df"] is not None:
     st.subheader("Estimated Revenue by Category")
     st.bar_chart(category)
 
-# 5. AI INTERFACE
-st.title("AI Interface for Data Queries")
+st.header("AI Interface for Data Queries")
 
-user_question = st.text_input("Type your question, fool:")
+with st.form("query_form"):
+    user_question = st.text_input("Type your question", key="user_question")
+    submitted = st.form_submit_button("Run Query")
 
-# 6. TRIGGER THE AI QUERY BUTTON
-if st.button("Run Query!"):
+if submitted:
     if user_question:
+        st.session_state.query_error = None
+        st.session_state.query_result = None
         with st.spinner("Processing your question..."):
             try:
                 sql, data, answer = ask_database(user_question)
-                # Store all three pieces of data as a dictionary inside session state
-                st.session_state["ai_results"] = {
+                st.session_state.query_result = {
                     "sql": sql,
                     "data": data,
-                    "answer": answer
+                    "answer": answer,
                 }
-            except Exception as e:
-                st.error(f"Error: {e}")
+            except Exception as exc:
+                st.session_state.query_error = str(exc)
     else:
-        st.warning("Please enter a question first, dumbo!")
-        st.session_state["ai_results"] = None
+        st.session_state.query_error = "Please enter a question first."
 
-# 7. DISPLAY THE AI QUERY RESULTS
-# This ensures the answers stay on screen even if you click "Run Data Pipeline" again!
-if st.session_state["ai_results"] is not None:
-    results = st.session_state["ai_results"]
-    
+if st.session_state.query_error:
+    st.warning(st.session_state.query_error)
+
+if st.session_state.query_result is not None:
+    result = st.session_state.query_result
     with st.expander("See full details"):
         st.subheader("Generated SQL Query")
-        st.code(results["sql"], language="sql")
-    
-        st.subheader("Raw Data")
-        st.write(results["data"])
+        st.code(result["sql"], language="sql")
 
-    st.subheader("AI Answer:")
-    st.success(results["answer"])
+        st.subheader("Raw Data")
+        st.write(result["data"])
+
+    st.subheader("AI Answer")
+    st.success(result["answer"])
