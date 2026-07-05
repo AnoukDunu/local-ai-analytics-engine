@@ -27,6 +27,10 @@ if "products_df" not in st.session_state:
 # Initialising the session state for the AI chat history
 if "chat_messages" not in st.session_state:
     st.session_state["chat_messages"] = []
+
+# Initialise session state to store the LLM thinking process per query
+if "thinking_process" not in st.session_state:
+    st.session_state["thinking_process"] = []
 # ==================================================
 
 # Triggering the Pipeline Run Button
@@ -57,6 +61,14 @@ for message in st.session_state["chat_messages"]:
     with st.sidebar.chat_message(message["role"]):
         st.markdown(message["content"])
 
+        if message.get("role") == "assistant" and message.get("thinking"):
+            with st.expander("View thinking"):
+                st.subheader("Generated SQL Query")
+                st.code(message["thinking"]["sql"], language="sql")
+
+                st.subheader("Raw Data")
+                st.write(message["thinking"]["data"])
+
 # Chat input for the user
 user_input = st.sidebar.chat_input("Talk to me...")
 
@@ -72,33 +84,42 @@ if user_input:
     with st.sidebar.chat_message("user"):
         st.markdown(user_input)
 
-    try:
-        with st.spinner("Thinking..."):
-            sql, data, answer = ask_database(user_input)
 
-            # format responses
-            assistant_reply = f"""
-                **Generated SQL Query:**\n
-                ```
-                {sql}
-                ```\n
-                ***Data Retrieved:***\n
-                ```
-                {data}
-                ```\n
-                ***Answer:***\n
-                {answer}\n
-                """
+    try:
+        # Copilot added this to make tge spinner appear in the sidebar instead of the main page.
+        spinner_placeholder = st.sidebar.empty() 
+        with spinner_placeholder.container():
+            with st.spinner("Thinking..."):
+                sql, data, answer = ask_database(user_input)
+
+        assistant_reply = answer
         
+        thinking_entry = {
+            "query": user_input,
+            "sql": sql,
+            "data": data,
+            "answer": answer,
+        }
+
         # Save the assistant's response
         st.session_state["chat_messages"].append({
             "role": "assistant",
-            "content": assistant_reply
+            "content": assistant_reply,
+            "thinking": thinking_entry,
         })
-        
+
+        # Save the thinking process results in the session state
+        st.session_state["thinking_process"].append(thinking_entry)
+
         # Display the assistant's response
         with st.sidebar.chat_message("assistant"):
             st.markdown(assistant_reply)
+            with st.expander("View thinking"):
+                st.subheader("Generated SQL Query")
+                st.code(sql, language="sql")
+
+                st.subheader("Raw Data")
+                st.write(data)
 
     except Exception as e:
         st.sidebar.error(f"Error: {e}")
