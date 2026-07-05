@@ -18,7 +18,6 @@ from src.main import run_pipeline
 
 # Creating a function to create charts from AI query outputs
 def generate_chart(data):
-    # converting data to a DataFrame
     df = pd.DataFrame(data)
 
     if df.empty:
@@ -46,11 +45,11 @@ def generate_chart(data):
     else:
         st.warning("The returned data does not have numeric columns for charting.")
 
-
+# ================= Configuring the Streamlit page =================
 st.set_page_config(page_title="Products Analytics Dashboard", layout="wide")
 st.title("Products Analytics Dashboard")
 
-# ==================================================
+# =================== Initialising Session State ==================
 # Initialise session state for pipeline results
 if "products_df" not in st.session_state:
     st.session_state["products_df"] = None
@@ -62,8 +61,8 @@ if "chat_messages" not in st.session_state:
 # Initialise session state to store the LLM thinking process per query
 if "thinking_process" not in st.session_state:
     st.session_state["thinking_process"] = []
-# ==================================================
 
+# ====================== Pipeline and Generate Tables ======================
 # Triggering the Pipeline Run Button
 if st.button("Run Data Pipeline", on_click=run_pipeline):
     conn = get_connection()
