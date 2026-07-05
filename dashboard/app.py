@@ -27,6 +27,10 @@ if "products_df" not in st.session_state:
 # Initialise the session state for AI query results
 if "ai_results" not in st.session_state:
     st.session_state["ai_results"] = None
+
+# Initialising the session state for the AI chat history
+if "chat_messages" not in st.session_state:
+    st.session_state["chat_messages"] = []
 # ==================================================
 
 # Triggering the Pipeline Run Button
@@ -49,41 +53,56 @@ if st.session_state["products_df"] is not None:
     st.subheader("Estimated Revenue by Category")
     st.bar_chart(category)
 
-# AI interface
-st.title("AI Interface for Data Queries")
+# ====================================== AI interface ======================================
+st.sidebar.title("QueryMind AI")
 
-with st.form("query_form"):
-    user_question = st.text_input("Type your question, fool:")
-    submitted = st.form_submit_button("Run Query!")
+# Displaying the chat history in the sidebar
+for message in st.session_state["chat_messages"]:
+    with st.sidebar.chat_message(message["role"]):
+        st.markdown(message["content"])
 
-# Triggering the AI querry button
-if submitted:
-    if user_question:
-        with st.spinner("Processing your question..."):
-            try:
-                sql, data, answer = ask_database(user_question)
-                # Store all three pieces of data as a dictionary inside session state
-                st.session_state["ai_results"] = {
-                    "sql": sql,
-                    "data": data,
-                    "answer": answer
-                }
-            except Exception as e:
-                st.error(f"Error: {e}")
-    else:
-        st.warning("Please enter a question first, dumbo!")
-        st.session_state["ai_results"] = None
+# Chat input for the user
+user_input = st.sidebar.chat_input("Talk to me...")
 
-# Displaying the AI query results on the dashboard
-if st.session_state["ai_results"] is not None:
-    results = st.session_state["ai_results"]
-    
-    with st.expander("See full details"):
-        st.subheader("Generated SQL Query")
-        st.code(results["sql"], language="sql")
-    
-        st.subheader("Raw Data")
-        st.write(results["data"])
+# When a user submits a message/question
+if user_input:
+    # Store the user's messsage in the chat history
+    st.session_state["chat_messages"].append({
+        "role": "user",
+        "content": user_input
+    })
 
-    st.subheader("AI Answer:")
-    st.success(results["answer"])
+    # Display the user message in the sidebar
+    with st.sidebar.chat_message("user"):
+        st.markdown(user_input)
+
+    try:
+        with st.spinner("Thinking..."):
+            sql, data, answer = ask_database(user_input)
+
+            # format responses
+            assistant_reply = f"""
+                **Generated SQL Query:**\n
+                ```
+                {sql}
+                ```\n
+                ***Data Retrieved:***\n
+                ```
+                {data}
+                ```\n
+                ***Answer:***\n
+                {answer}\n
+                """
+        
+        # Save the assistant's response
+        st.session_state["chat_messages"].append({
+            "role": "assistant",
+            "content": assistant_reply
+        })
+        
+        # Display the assistant's response
+        with st.sidebar.chat_message("assistant"):
+            st.markdown(assistant_reply)
+
+    except Exception as e:
+        st.sidebar.error(f"Error: {e}")
