@@ -24,10 +24,6 @@ st.title("Products Analytics Dashboard")
 if "products_df" not in st.session_state:
     st.session_state["products_df"] = None
 
-# Initialise the session state for AI query results
-if "ai_results" not in st.session_state:
-    st.session_state["ai_results"] = None
-
 # Initialising the session state for the AI chat history
 if "chat_messages" not in st.session_state:
     st.session_state["chat_messages"] = []
