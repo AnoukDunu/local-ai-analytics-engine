@@ -8,7 +8,8 @@ import ollama
 
 def ask_llm(prompt):
     response = ollama.chat(
-        model="llama3.1:8b",
+        # model="llama3.1:8b",
+        model="qwen2.5-coder:7b",
         messages=[{"role": "user", "content":prompt}]
     )
     return response["message"]["content"]
