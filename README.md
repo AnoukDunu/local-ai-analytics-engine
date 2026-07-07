@@ -9,6 +9,4 @@ Integrating previously designed modular ETL Pipelines with an AI layer to query 
 
 - Develop a cleaner UI for the front-end
 
-- Implement Scheduler with Cron
-
-- Upgrade project to use Airflow
+- Upgrade project to use Airflow (with Docker) or Cron
