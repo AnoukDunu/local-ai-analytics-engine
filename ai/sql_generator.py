@@ -26,4 +26,8 @@ def generate_sql(question):
     Only return SQL query. Do not include any explanations or additional text.
     """
 
-    return ask_llm(prompt)
+    response = ask_llm(prompt)
+    return response.strip()  # Return the SQL query without leading/trailing whitespace
+    # return ask_llm(prompt)
+
+# def clean_sql()
