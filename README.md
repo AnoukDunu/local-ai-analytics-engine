@@ -5,6 +5,10 @@ Integrating previously designed modular ETL Pipelines with an AI layer to query 
 
 ~- Fix Streamlit Buttons from refreshing entire session onclick~
 
+~- Develop a ChatGPT style session-based chat with the local LLM and keep consisteny per session~
+
 - Develop a cleaner UI for the front-end
 
-~- Develop a ChatGPT style session-based chat with the local LLM and keep consisteny per session~
+- Implement Scheduler with Cron
+
+- Upgrade project to use Airflow
