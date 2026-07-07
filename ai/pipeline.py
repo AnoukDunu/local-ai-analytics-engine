@@ -12,7 +12,7 @@ def ask_database(question):
 
     # Implementing guardrails to ensure the SQL query is safe before executing it
     if not is_query_safe(sql):
-        raise ValueError("Unsafe query generated. Request denied!.")
+        raise ValueError("Unsafe query generated. Request denied!")
     
     # Execute the SQL query and get results
     data = run_query(sql)

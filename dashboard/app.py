@@ -100,7 +100,7 @@ for message in st.session_state["chat_messages"]:
                 st.write(message["thinking"]["data"])
 
 # Chat input for the user
-user_input = st.sidebar.chat_input("Talk to me...")
+user_input = st.sidebar.chat_input("Ask your data...")
 
 # When a user submits a message/question
 if user_input:

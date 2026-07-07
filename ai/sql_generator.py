@@ -11,8 +11,15 @@ def generate_sql(question):
     prompt = f"""
     You are a PostgreSQL expert. You will be given a question and a database schema. 
     Your task is to convert a question into a valid SQL query that can be executed against the provided schema.
+    Use ONLY the schema below to generate the SQL query. Do not make any assumptions about the database structure or data beyond what is provided in the schema.
 
     {schema}
+    Rules:
+    - Only use the table provided
+    - Only use the columns listed
+    - Do not invent columns
+    - Return ONLY the SQL query
+    - Do not include explanations
 
     Question: {question}
 
