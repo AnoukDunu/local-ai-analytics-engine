@@ -20,6 +20,7 @@ This project is an interation of the previous Data Analytics Pipeline project, b
 API → Extract → Staging Table → Transform → Quality Checks → Final Table → Dashboard
 
 ## Project Structure
+<img width="597" height="888" alt="Screenshot 2026-07-07 at 4 10 48 pm" src="https://github.com/user-attachments/assets/8f2c56a4-b505-4def-a706-33c0e5b3d412" />
 
 ## Tech Stack
 - Python
