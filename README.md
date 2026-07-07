@@ -49,3 +49,56 @@ API → Extract → Staging Table → Transform → Quality Checks → Final Tab
 - Develop a cleaner UI for the front-end
 
 - Upgrade project to use Airflow (with Docker) or Cron
+
+
+local-ai-analytics-engine/
+│
+├── ai/
+│   ├── db.py 
+│   ├── guardrails.py
+│   ├── llm.py
+│   ├── pipeline.py
+│   ├── query_engine.py
+│   ├── response_generator.py
+│   ├── schema.py
+│   └── sql_generator.py
+│
+├── dashboard/
+│   └── app.py 
+│
+├── data/
+│   └── data.csv 
+│
+├── logs/
+│   └── pipeline.log 
+│
+├── src/
+│   ├── config/
+│   │   └── config.py
+│   │
+│   ├── database/
+│   │   ├── connection.py
+│   │   └── database schema
+│   │
+│   ├── extract/
+│   │   └── extract.py
+│   │
+│   ├── load/
+│   │   ├── load_final.py
+│   │   └── load_staging.py
+│   │
+│   ├── transform/
+│   │   └── transform.py
+│   │
+│   ├── utilities/
+│   │   ├── logger.py
+│   │   └── quality_checks.py
+│   │   
+│   └── main.py
+│
+├── .env                   # Environment variables (DB credentials)
+├── README.md              # Project dependencies
+└── requirements.txt       # Project documentation
+
+
+
