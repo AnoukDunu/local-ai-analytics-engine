@@ -8,5 +8,3 @@ Integrating previously designed modular ETL Pipelines with an AI layer to query 
 - Develop a cleaner UI for the front-end
 
 ~- Develop a ChatGPT style session-based chat with the local LLM and keep consisteny per session~
-
-- Investigate Streamlit's capabilities and try to develop a more robust dashboard
