@@ -53,7 +53,7 @@ API → Extract → Staging Table → Transform → Quality Checks → Final Tab
 
 local-ai-analytics-engine/
 │
-├── ai/
+├── ai/                          # AI/LLM layer and logic
 │   ├── db.py 
 │   ├── guardrails.py
 │   ├── llm.py
@@ -63,42 +63,42 @@ local-ai-analytics-engine/
 │   ├── schema.py
 │   └── sql_generator.py
 │
-├── dashboard/
+├── dashboard/                   # Streamlit dashboard
 │   └── app.py 
 │
-├── data/
+├── data/                        # Optional: Local Data
 │   └── data.csv 
 │
-├── logs/
+├── logs/                        # Logs
 │   └── pipeline.log 
 │
 ├── src/
-│   ├── config/
+│   ├── config/                  # Configuration management
 │   │   └── config.py
 │   │
-│   ├── database/
+│   ├── database/                # Database connection logic
 │   │   ├── connection.py
 │   │   └── database schema
 │   │
-│   ├── extract/
+│   ├── extract/                 # Data ingestion layer
 │   │   └── extract.py
 │   │
-│   ├── load/
+│   ├── load/                    # Data loading logic
 │   │   ├── load_final.py
 │   │   └── load_staging.py
 │   │
-│   ├── transform/
+│   ├── transform/               # Data transformation logic
 │   │   └── transform.py
 │   │
-│   ├── utilities/
+│   ├── utilities/               #Reusable helpers
 │   │   ├── logger.py
 │   │   └── quality_checks.py
 │   │   
 │   └── main.py
 │
-├── .env                   # Environment variables (DB credentials)
-├── README.md              # Project dependencies
-└── requirements.txt       # Project documentation
+├── .env                         # Environment variables (DB credentials)
+├── README.md                    # Project dependencies
+└── requirements.txt             # Project documentation
 
 
 
