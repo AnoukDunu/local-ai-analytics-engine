@@ -2,7 +2,7 @@
 ## Project Overview
 A more robust ETL pipeline with a more personalised dashboard and an integrated AI layer which processes questions asked in natural language and produces results, explanations and downloadable graphs.
 
-This project is an interation of the previous Data Analytics Pipeline project, but as not everyone is comfortable with integrating frontier or local LLMs to interact with sensitive databases, this is framed as a completely new project.
+This project is an interation of the previous [Data Analytics Pipeline project](https://github.com/AnoukDunu/DataFlow-Analytics-Pipeline), but as not everyone is comfortable with integrating frontier or local LLMs to interact with sensitive databases, this is framed as a completely new project.
 
 ## Project Features
 
