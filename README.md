@@ -1,7 +1,7 @@
 # QueryMind: AI-Powered Data Analytics Engine
 Integrating previously designed modular ETL Pipelines with an AI layer to query analytics
 
-- Include safety measures for LLM (no DELETE, ALTER, CREATE priviledges) 
+~- Include safety measures for LLM (no DELETE, ALTER, CREATE priviledges)~
 
 ~- Fix Streamlit Buttons from refreshing entire session onclick~
 
