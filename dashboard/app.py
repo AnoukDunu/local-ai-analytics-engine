@@ -155,6 +155,8 @@ if user_input:
 
                 st.subheader("Raw Data")
                 st.write(data)
-
+    # updated the exception handling to catch ValueError and display a warning in the sidebar instead of crashing the app.
+    except ValueError as ve:
+        st.sidebar.warning(f"Error: {ve}")
     except Exception as e:
-        st.sidebar.error(f"Error: {e}")
+        st.sidebar.error(f"Unexpected error: {e}")

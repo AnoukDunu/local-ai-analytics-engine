@@ -40,4 +40,14 @@ def is_query_safe(query:str)-> bool:
     
     # Checking if correct table is used
     allowed_tables = {"cln_products"}
-    
+
+    # Matching table name
+    # The regex pattern was taken straight from AI because I don't fully understand regex patterns.
+    table_match = re.findall(r"from\s+(\w+)", query_lower)
+
+    if table_match:
+        for table in table_match:
+            if table not in allowed_tables:
+                return False
+            
+    return True
