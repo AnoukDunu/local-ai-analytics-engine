@@ -7,13 +7,17 @@ This project is an interation of the previous [Data Analytics Pipeline project](
 ## Project Features
 
 - End-to-end ETL pipeline
+- Dashboard for interactive data visualisation
+- Local AI/LLM to process natural language and generate information
+- AI/LLM generated graphs depending on query
+- AI/LLM safeguards implemented to ensure safe queries 
 - Modular project structure
 - Data transformation using Pandas
 - PostgreSQL database integration
 - Data quality checks before loading
 - Centralised logging system
 - REST API based data ingestion/extraction
-- Dashboard for interactive data visualisation
+
 
 ## Pipeline Architecture
 
@@ -63,8 +67,11 @@ PYTHONPATH=src streamlit run dashboard/app.py
 ## Future Implementations/Improvements
 
 - Develop a cleaner UI for the front-end
-
 - Upgrade project to use Airflow (with Docker) or Cron
+- Add the option to use Frontier models via API (but doubt I will implement this)
 
+## ⚠️ Troubleshooting
+- The Ollama application or a terminal instance needs to run simultaneously with the pipeline for the AI layer to function
+- Consider your hardware when running LLMs/SLMs due to larger models with higher parameters requiring significant resources 
 
 
